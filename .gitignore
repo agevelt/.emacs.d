@@ -3,3 +3,4 @@ backups/
 elpa/
 network-security.data
 recentf
+.config.el
