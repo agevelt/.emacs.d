@@ -1,11 +1,7 @@
-* Global variables
-#+BEGIN_SRC emacs-lisp
 (defconst *is-a-mac*
   (eq system-type 'darwin)
   "Is this running on OS X?")
-#+END_SRC
-* Initial fixer-upper
-#+BEGIN_SRC emacs-lisp
+
 (setq inhibit-startup-screen t )	; inhibit useless and old-school startup screen
 (setq ring-bell-function 'ignore )	; silent bell when you make a mistake
 (setq coding-system-for-read 'utf-8 )	; use utf-8 by default
@@ -13,11 +9,6 @@
 (setq sentence-end-double-space nil)	; sentence SHOULD end with only a point.
 (setq default-fill-column 80)		; toggle wrapping text at the 80th character
 (setq initial-scratch-message "Whatever you're about to do, it's not worth it")
-#+END_SRC
-
-Remove Emacs GUI elements
-#+BEGIN_SRC emacs-lisp
-
 
 (when (and (fboundp 'tool-bar-mode) (not (eq tool-bar-mode -1)))
   (tool-bar-mode -1))
@@ -33,18 +24,13 @@ Remove Emacs GUI elements
 ;; add dark mode header
 (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
 (add-to-list 'default-frame-alist '(ns-appearance . dark))
-#+END_SRC
-* Backup
-Enable backups and put them in ./backups
-#+BEGIN_SRC emacs-lisp
+
 (setq delete-old-versions -1 )		; don't delete old backups
 (setq version-control t)		; use version control
 (setq vc-make-backup-files t )		; make backups file even when in version controlled dir
 (setq backup-directory-alist `(("." . "~/.emacs.d/backups")) ) ; which directory to put backups file
 (setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)) ) ;transform backups file name
-#+END_SRC
-* Shame header
-#+BEGIN_SRC emacs-lisp
+
 (use-package evil :ensure t
   :config
   (evil-mode 1))
@@ -127,15 +113,6 @@ Enable backups and put them in ./backups
         which-key-idle-delay 0.05)
   )
 
-#+END_SRC
-
-#+RESULTS:
-
-* Split emacs custom config into separate file
-http://emacsblog.org/2008/12/06/quick-tip-detaching-the-custom-file/
-
-#+BEGIN_SRC emacs-lisp
 (setq custom-file "~/.emacs.d/custom.el")
 
 (load custom-file 'no-error)
-#+END_SRC
