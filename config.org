@@ -18,6 +18,7 @@
 Remove Emacs GUI elements
 #+BEGIN_SRC emacs-lisp
 
+
 (when (and (fboundp 'tool-bar-mode) (not (eq tool-bar-mode -1)))
   (tool-bar-mode -1))
 (unless *is-a-mac*
@@ -28,6 +29,10 @@ Remove Emacs GUI elements
 ;; tooltips in echo-aera
 (when (and (fboundp 'tooltip-mode) (not (eq tooltip-mode -1)))
   (tooltip-mode -1))
+  
+;; add dark mode header
+(add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
+(add-to-list 'default-frame-alist '(ns-appearance . dark))
 #+END_SRC
 * Backup
 Enable backups and put them in ./backups
@@ -55,27 +60,43 @@ Enable backups and put them in ./backups
 (use-package general :ensure t
   :config
   )
-
-(general-define-key
-  :states '(normal visual)
-  :prefix "SPC"
   
-  ;; simple commands 
+;; a package for discovering keybinding in the current leader mode
+(use-package discover-my-major :ensure t)
+
+;; Leader commands 
+(general-define-key
+  :states '(normal visual motion)
+  :prefix "SPC"
+  :keymaps 'override ;; Override so that SPC isn't overridden in help mode.
+
+  "SPC"   'counsel-M-x
   "/"     'counsel-ag
-  "TAB"   '(switch-to-other-buffer :which-key "other buffer")
-  "a"     '(:ignore t :which-key "Applications")
+  "TAB"   '(switch-to-buffer :which-key "other buffer")
+  "a"     '(:ignore t :which-key "Application")
+  "aa"    'org-agenda
   "ar"    'ranger
   "ad"    'dired
   "g"     '(:ignore t :which-key "Git")
   "gs"    'magit-status
   "b"     'ivy-switch-buffer   ; change buffer, chose using ivy
   "/"     'counsel-git-grep    ; find string in git project 
-  "f"     '(:ignore t :which-key "Files")
+  "f"     '(:ignore t :which-key "File")
   "ff"    'counsel-find-file     ; find file using ivy
   "fr"    'counsel-recentf       ; find recently edited file
   "fs"    'save-buffer           ; save current buffer
   "p"     '(:ignore t :which-key "Project")
   "pf"    'counsel-git           ; find file in git project
+  "w"     '(:ignore t :which-key "Window")
+  "wj"    'evil-window-down
+  "wk"    'evil-window-up
+  )
+  
+;; General keys
+(general-define-key
+  :states '(normal visual)
+  "C-h C-m"   'discover-my-major
+  "C-u"       'evil-scroll-up
   )
 
 (use-package ivy :ensure t
@@ -107,6 +128,9 @@ Enable backups and put them in ./backups
   )
 
 #+END_SRC
+
+#+RESULTS:
+
 * Split emacs custom config into separate file
 http://emacsblog.org/2008/12/06/quick-tip-detaching-the-custom-file/
 

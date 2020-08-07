@@ -1,0 +1,5 @@
+* TODOS
+dark mode
+C-j and C-k for navigating minibuffers
+j and k for navigating magit (magit-evil?)
+
