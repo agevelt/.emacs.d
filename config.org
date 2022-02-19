@@ -115,10 +115,22 @@ Enable backups and put them in ./backups
   )
 
 (use-package ivy :ensure t
-  :diminish (ivy-mode . "") ; does not display ivy in the modeline
+  :diminish ; does not display ivy in the modeline
   :init (ivy-mode 1)        ; enable ivy globally at startup
   :bind (:map ivy-mode-map  ; bind in the ivy buffer
-         ("C-'" . ivy-avy)) ; C-' to ivy-avy
+   ("C-'" . ivy-avy)  ; C-' to ivy-avy
+   :map ivy-minibuffer-map
+   ("TAB" . ivy-alt-done)
+   ("C-l" . ivy-alt-done)
+   ("C-j" . ivy-next-line)
+   ("C-k" . ivy-previous-line)
+   :map ivy-switch-buffer-map
+   ("C-k" . ivy-previous-line) ; this is normally ivy-switch-buffer-kill
+   ("C-d" . ivy-switch-buffer-kill)
+   :map ivy-reverse-i-search-map
+   ("C-k" . ivy-previous-line) ; this is normally ivy-switch-buffer-kill
+   ("C-d" . ivy-reverse-i-search-kill)
+  )
   :config
   (setq ivy-use-virtual-buffers t)   ; extend searching to bookmarks and …
   (setq ivy-height 20)               ; set height of the ivy window
