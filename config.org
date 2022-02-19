@@ -3,10 +3,15 @@
 (defconst *is-a-mac*
   (eq system-type 'darwin)
   "Is this running on OS X?")
+
+(defconst *EMACSDIR*
+  (file-name-directory (or load-file-name (buffer-file-name)))
+  "Emacs config directory")
+
 #+END_SRC
 * Initial fixer-upper
 #+BEGIN_SRC emacs-lisp
-(setq inhibit-startup-screen t )	; inhibit useless and old-school startup screen
+(setq inhibit-startup-screen t )	; inhibit old-school startup screen
 (setq ring-bell-function 'ignore )	; silent bell when you make a mistake
 (setq coding-system-for-read 'utf-8 )	; use utf-8 by default
 (setq coding-system-for-write 'utf-8 )
@@ -17,7 +22,6 @@
 
 Remove Emacs GUI elements
 #+BEGIN_SRC emacs-lisp
-
 
 (when (and (fboundp 'tool-bar-mode) (not (eq tool-bar-mode -1)))
   (tool-bar-mode -1))
@@ -37,11 +41,11 @@ Remove Emacs GUI elements
 * Backup
 Enable backups and put them in ./backups
 #+BEGIN_SRC emacs-lisp
-(setq delete-old-versions -1 )		; don't delete old backups
-(setq version-control t)		; use version control
-(setq vc-make-backup-files t )		; make backups file even when in version controlled dir
-(setq backup-directory-alist `(("." . "~/.emacs.d/backups")) ) ; which directory to put backups file
-(setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)) ) ;transform backups file name
+  (setq delete-old-versions -1 )		; don't delete old backups
+  (setq version-control t)		; use version control
+  (setq vc-make-backup-files t )		; make backups file even when in version controlled dir
+  (setq backup-directory-alist `(("." . ,(format "%s%s" *EMACSDIR* "backups")))) ; which directory to put backups file
+  (setq auto-save-file-name-transforms `((".*" ,(format "%s%s" *EMACSDIR* "auto-save-list") t))) ;transform backups file name
 #+END_SRC
 * Shame header
 #+BEGIN_SRC emacs-lisp
