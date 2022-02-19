@@ -49,9 +49,20 @@ Enable backups and put them in ./backups
 #+END_SRC
 * Shame header
 #+BEGIN_SRC emacs-lisp
-(use-package evil :ensure t
+(use-package evil
+  :ensure t
+  :init
+  (setq evil-want-integration t)
+  (setq evil-want-keybinding nil)
   :config
   (evil-mode 1))
+
+(use-package evil-collection
+  :after evil
+  :ensure t
+  :config
+  (evil-collection-init))
+
 
 (use-package ranger :ensure t
   :commands (ranger)
