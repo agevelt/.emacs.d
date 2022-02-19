@@ -1,10 +1,8 @@
 (let ((gc-cons-threshold (* 24 1024 1024)))
   (require 'package)
   (setq package-enable-at-startup nil)
-  (setq package-archives '(("org"       . "https://orgmode.org/elpa/")
-      			   ("gnu"       . "https://elpa.gnu.org/packages/")
-                           ("melpa"     . "https://melpa.org/packages/")
-                           ("marmalade" . "https://marmalade-repo.org/packages/")))
+  (setq package-archives '(("gnu"       . "https://elpa.gnu.org/packages/")
+                           ("melpa"     . "https://melpa.org/packages/")))
   (package-initialize)
 
   ;; Bootstrap 'use-package'
@@ -13,7 +11,6 @@
     (package-install 'use-package)) ; install the most recent version of use-package
 
   (use-package org
-    :pin org
     :ensure org-plus-contrib
     :defer 7)
 
